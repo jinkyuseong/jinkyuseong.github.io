@@ -22,22 +22,20 @@
 
   <title>Transmit text</title>
 
-  <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
-  <!--link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css"-->
-  <link rel="stylesheet" href="../../../css/main.css">
   <link rel="stylesheet" href="css/main.css" />
-
 </head>
 
 <body>
 
   <div id="container">
-
-    <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a> <span>Transmit text</span></h1>
-
     <div id="buttons">
+      <button id="offerSetupButton">OfferSetup</button>
+      <button id="offerButton">Offer</button>
+      <button id="answerSetupButton">AnswerSetup</button>
+      <button id="answerButton">Answer</button>
       <button id="startButton">Start</button>
       <button id="doneButton">Done</button>
+      <button id="connectButton">Connect</button>
       <button id="sendButton" disabled>Send</button>
       <button id="closeButton" disabled>Stop</button>
     </div>
@@ -52,14 +50,6 @@
         <textarea id="dataChannelReceive" disabled></textarea>
       </div>
     </div>
-
-    <p>View the console to see logging.</p>
-
-    <p>The <code>RTCPeerConnection</code> objects <code>localConnection</code> and <code>remoteConnection</code> are in global scope, so you can inspect them in the console as well.</p>
-
-    <p>For more information about RTCDataChannel, see <a href="http://www.html5rocks.com/en/tutorials/webrtc/basics/#toc-rtcdatachannel" title="RTCDataChannel section of HTML5 Rocks article about WebRTC">Getting Started With WebRTC</a>.</p>
-
-    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/datachannel/basic" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
   </div>
 
 <h2>Local</h2>
@@ -68,6 +58,11 @@
 		<h2>Remote</h2>
   <textarea id="remoteDesc"></textarea>
 
+  <h2>ICE Candidate offer</h2>
+  <textarea id="iceCandidateOffer"></textarea>
+
+  <h2>ICE Candidate answer</h2>
+  <textarea id="iceCandidateAnswer"></textarea>
 <!--
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   -->

@@ -20,13 +20,27 @@ var localDesc = document.querySelector('textarea#localDesc');
 var remoteDesc = document.querySelector('textarea#remoteDesc');
 var startButton = document.querySelector('button#startButton');
 var doneButton = document.querySelector('button#doneButton');
+var connectButton = document.querySelector('button#connectButton');
 var sendButton = document.querySelector('button#sendButton');
 var closeButton = document.querySelector('button#closeButton');
 
-startButton.onclick = createConnection;
+var offerSetupButton = document.querySelector('button#offerSetupButton');
+var answerSetupButton = document.querySelector('button#answerSetupButton');
+var offerButton = document.querySelector('button#offerButton');
+var answerButton = document.querySelector('button#answerButton');
+var iceCandidateOffer = document.querySelector('textarea#iceCandidateOffer');
+var iceCandidateAnswer = document.querySelector('textarea#iceCandidateAnswer');
+
+//startButton.onclick = createConnection;
 doneButton.onclick = setRemoteDescriptionManual;
+connectButton.onclick = doConnect;
 sendButton.onclick = sendData;
 closeButton.onclick = closeDataChannels;
+
+offerSetupButton.onclick = offerSetup;
+answerSetupButton.onclick = answerSetup;
+offerButton.onclick = createOfferManual;
+answerButton.onclick = createAnswerManual;
 
 function enableStartButton() {
   startButton.disabled = false;
@@ -36,7 +50,7 @@ function disableSendButton() {
   sendButton.disabled = true;
 }
 
-function createConnection() {
+function offerSetup() {
   dataChannelSend.placeholder = '';
   var servers = null;
   pcConstraint = null;
@@ -56,10 +70,36 @@ function createConnection() {
   trace('Created send data channel');
 
   localConnection.onicecandidate = function(e) {
-    onIceCandidate(localConnection, e);
+    if (e.candidate)
+    {
+      console.log("localConnection.onicecandidate");
+      console.log(e);
+      iceCandidateOffer.value += JSON.stringify(e.candidate);
+    }
+    else
+      console.log("");
+    /*
+    localConnection.addIceCandidate(e.candidate)
+    .then(
+      function() {
+        onAddIceCandidateSuccess(localConnection);
+      },
+      function(err) {
+        onAddIceCandidateError(localConnection, err);
+      }
+    );
+    */
   };
   sendChannel.onopen = onSendChannelStateChange;
   sendChannel.onclose = onSendChannelStateChange;
+}
+
+function answerSetup() {
+  dataChannelSend.placeholder = '';
+  var servers = null;
+  pcConstraint = null;
+  dataConstraint = null;
+  trace('Using SCTP based data channels');
 
   // Add remoteConnection to global scope to make it visible
   // from the browser console.
@@ -68,16 +108,39 @@ function createConnection() {
   trace('Created remote peer connection object remoteConnection');
 
   remoteConnection.onicecandidate = function(e) {
-    onIceCandidate(remoteConnection, e);
+    if (e.candidate)
+    {
+      console.log("remoteConnection.onicecandidate");
+      console.log(e);
+      iceCandidateOffer.value += JSON.stringify(e.candidate);
+    }
+    else
+      console.log("");
   };
   remoteConnection.ondatachannel = receiveChannelCallback;
+}
 
+function createOfferManual() {
+  console.log("create offer");
   localConnection.createOffer().then(
     gotDescription1,
     onCreateSessionDescriptionError
   );
   startButton.disabled = true;
   closeButton.disabled = false;
+}
+
+function createAnswerManual() {
+  var desc = JSON.parse(remoteDesc.value);
+  console.log("remoteConnection.setRemoteDescription");
+  remoteConnection.setRemoteDescription(desc);
+  console.log("create answer");
+  remoteConnection.createAnswer().then(
+    gotDescription2,
+    onCreateSessionDescriptionError
+  );
+
+  remoteConnection.addIceCandidate(JSON.parse(iceCandidateAnswer.value));
 }
 
 function onCreateSessionDescriptionError(error) {
@@ -112,9 +175,10 @@ function closeDataChannels() {
 }
 
 function gotDescription1(desc) {
+  console.log("localConnection.setLocalDescription");
   localConnection.setLocalDescription(desc);
   trace('Offer from localConnection \n' + desc.sdp);
-  trace(desc.sdp.constructor.name);
+  console.log(desc);
 
   localDesc.value = JSON.stringify(desc);
 
@@ -130,16 +194,22 @@ function gotDescription1(desc) {
 function setRemoteDescriptionManual() {
   var desc = JSON.parse(remoteDesc.value);
   remoteConnection.setRemoteDescription(desc);
-  remoteConnection.createAnswer().then(
-    gotDescription2,
-    onCreateSessionDescriptionError
-  );
+}
+
+function doConnect() {
+  var desc = JSON.parse(remoteDesc.value);
+  console.log("localConnection.setRemoteDescription");
+  localConnection.setRemoteDescription(desc);
+  localConnection.addIceCandidate(JSON.parse(iceCandidateAnswer.value));
 }
 
 function gotDescription2(desc) {
+  console.log("remoteConnection.setLocalDescription");
   remoteConnection.setLocalDescription(desc);
-  trace('Answer from remoteConnection \n' + desc.sdp);
-  localConnection.setRemoteDescription(desc);
+  trace('Answer from remoteConnection \n' + desc);
+  console.log(desc);
+  localDesc.value = JSON.stringify(desc);
+//  localConnection.setRemoteDescription(desc);
 }
 
 function getOtherPc(pc) {
@@ -152,6 +222,7 @@ function getName(pc) {
 }
 
 function onIceCandidate(pc, event) {
+  /*
   getOtherPc(pc).addIceCandidate(event.candidate)
   .then(
     function() {
@@ -163,18 +234,21 @@ function onIceCandidate(pc, event) {
   );
   trace(getName(pc) + ' ICE candidate: \n' + (event.candidate ?
       event.candidate.candidate : '(null)'));
+  trace(event.candidate);
+  trace(event.candidate.candidate);
+  */
 }
 
 function onAddIceCandidateSuccess() {
-  trace('AddIceCandidate success.');
+  console.log('AddIceCandidate success.');
 }
 
 function onAddIceCandidateError(error) {
-  trace('Failed to add Ice Candidate: ' + error.toString());
+  console.log('Failed to add Ice Candidate: ' + error.toString());
 }
 
 function receiveChannelCallback(event) {
-  trace('Receive Channel Callback');
+  console.log('Receive Channel Callback');
   receiveChannel = event.channel;
   receiveChannel.onmessage = onReceiveMessageCallback;
   receiveChannel.onopen = onReceiveChannelStateChange;
@@ -188,7 +262,7 @@ function onReceiveMessageCallback(event) {
 
 function onSendChannelStateChange() {
   var readyState = sendChannel.readyState;
-  trace('Send channel state is: ' + readyState);
+  console.log('Send channel state is: ' + readyState);
   if (readyState === 'open') {
     dataChannelSend.disabled = false;
     dataChannelSend.focus();
@@ -203,5 +277,5 @@ function onSendChannelStateChange() {
 
 function onReceiveChannelStateChange() {
   var readyState = receiveChannel.readyState;
-  trace('Receive channel state is: ' + readyState);
+  console.log('Receive channel state is: ' + readyState);
 }
