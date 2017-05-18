@@ -70,7 +70,7 @@ function offerSetup() {
   trace('Created send data channel');
 
   localConnection.onicecandidate = function(e) {
-    if (e.candidate)
+    if (e.candidate && e.candidate.candidate.indexOf('.') > -1)
     {
       console.log("localConnection.onicecandidate");
       console.log(e);
@@ -108,9 +108,9 @@ function answerSetup() {
   trace('Created remote peer connection object remoteConnection');
 
   remoteConnection.onicecandidate = function(e) {
-    if (e.candidate)
+    if (e.candidate && e.candidate.candidate.indexOf('.') > -1)
     {
-      console.log("remoteConnection.onicecandidate");
+      console.log("remoteConnection.onicecandidate " + e.candidate.candidate.indexOf('.'));
       console.log(e);
       iceCandidateOffer.value += JSON.stringify(e.candidate);
     }
