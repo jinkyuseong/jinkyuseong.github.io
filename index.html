@@ -32,11 +32,9 @@
 -->
   <div id="container">
     <div id="buttons">
-      <button id="offerSetupButton">OfferSetup</button>
-      <button id="offerButton">Offer</button>
-      <button id="answerSetupButton">AnswerSetup</button>
-      <button id="answerButton">Answer</button>
-      <button id="connectButton">Connect</button>
+      <button id="serverButton">Server</button>
+      <button id="clientButton">Client</button>
+      <button id="connectButton" disabled>Connect</button>
       <button id="sendButton" disabled>Send</button>
       <button id="closeButton" disabled>Stop</button>
     </div>
@@ -53,27 +51,21 @@
     </div>
   </div>
 
-  <h2>Local</h2>
-  <textarea id="localDesc"></textarea><p>
-
-  <h2>ICE Candidate Local</h2>
-  <textarea id="iceCandidateOffer"></textarea>
-
+  <div id="serverInfoDiv">
   <h2>ServerInfo</h2>
   <textarea id="serverInfo"></textarea>
+  </div>
 
+  <div id="clientInfoDiv">
   <h2>ClientInfo</h2>
   <textarea id="clientInfo"></textarea>
+  </div>
 
-    <h2>Remote</h2>
-  <textarea id="remoteDesc"></textarea>
-
-  <h2>ICE Candidate Remote</h2>
-  <textarea id="iceCandidateAnswer"></textarea>
-
-
-  <h2>ServerInfo QRImage</h2>
+  <h2>LocalInfo QRImage</h2>
   <div id="qrimage"></div>
+  <p></p>
+  <textarea id="localInfo"></textarea>
+
 
 <!--
   <div id="capture">
@@ -83,13 +75,6 @@
   <script type="text/javascript">load();</script>
   </div>
   -->
-<!--
-  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-  -->
-  <script src="js/trace_common.js"></script>
   <script src="js/main.js"></script>
-
-  <!--script src="../../../js/lib/ga.js"></script-->
-
 </body>
 </html>
