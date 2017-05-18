@@ -8,7 +8,6 @@
 -->
 <html>
 <head>
-
   <meta charset="utf-8">
   <meta name="description" content="WebRTC code samples">
   <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
@@ -27,14 +26,16 @@
 
 <body>
 
+<!--
+<script type="text/javascript" src="js/llqrcode.js"></script>
+<script type="text/javascript" src="js/webqr.js"></script>
+-->
   <div id="container">
     <div id="buttons">
       <button id="offerSetupButton">OfferSetup</button>
       <button id="offerButton">Offer</button>
       <button id="answerSetupButton">AnswerSetup</button>
       <button id="answerButton">Answer</button>
-      <button id="startButton">Start</button>
-      <button id="doneButton">Done</button>
       <button id="connectButton">Connect</button>
       <button id="sendButton" disabled>Send</button>
       <button id="closeButton" disabled>Stop</button>
@@ -52,17 +53,36 @@
     </div>
   </div>
 
-<h2>Local</h2>
+  <h2>Local</h2>
   <textarea id="localDesc"></textarea><p>
 
-		<h2>Remote</h2>
-  <textarea id="remoteDesc"></textarea>
-
-  <h2>ICE Candidate offer</h2>
+  <h2>ICE Candidate Local</h2>
   <textarea id="iceCandidateOffer"></textarea>
 
-  <h2>ICE Candidate answer</h2>
+  <h2>ServerInfo</h2>
+  <textarea id="serverInfo"></textarea>
+
+  <h2>ClientInfo</h2>
+  <textarea id="clientInfo"></textarea>
+
+    <h2>Remote</h2>
+  <textarea id="remoteDesc"></textarea>
+
+  <h2>ICE Candidate Remote</h2>
   <textarea id="iceCandidateAnswer"></textarea>
+
+
+  <h2>ServerInfo QRImage</h2>
+  <div id="qrimage"></div>
+
+<!--
+  <div id="capture">
+  <h2>Capture</ha>
+  <div id="outdiv"></div>
+  <canvas id="qr-canvas" width="800" height="600"></canvas>
+  <script type="text/javascript">load();</script>
+  </div>
+  -->
 <!--
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   -->
