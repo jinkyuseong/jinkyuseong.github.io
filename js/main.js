@@ -16,12 +16,15 @@ var pcConstraint;
 var dataConstraint;
 var dataChannelSend = document.querySelector('textarea#dataChannelSend');
 var dataChannelReceive = document.querySelector('textarea#dataChannelReceive');
-var manualSdp = document.querySelector('textarea#manualSdp');
+var localDesc = document.querySelector('textarea#localDesc');
+var remoteDesc = document.querySelector('textarea#remoteDesc');
 var startButton = document.querySelector('button#startButton');
+var doneButton = document.querySelector('button#doneButton');
 var sendButton = document.querySelector('button#sendButton');
 var closeButton = document.querySelector('button#closeButton');
 
 startButton.onclick = createConnection;
+doneButton.onclick = setRemoteDescriptionManual;
 sendButton.onclick = sendData;
 closeButton.onclick = closeDataChannels;
 
@@ -113,7 +116,7 @@ function gotDescription1(desc) {
   trace('Offer from localConnection \n' + desc.sdp);
   trace(desc.sdp.constructor.name);
 
-  manualSdp.value = JSON.stringify(desc);
+  localDesc.value = JSON.stringify(desc);
 
 /*
   remoteConnection.setRemoteDescription(desc);
@@ -125,7 +128,7 @@ function gotDescription1(desc) {
 }
 
 function setRemoteDescriptionManual() {
-  var desc = JSON.parse(manualSdp.value);
+  var desc = JSON.parse(remoteDesc.value);
   remoteConnection.setRemoteDescription(desc);
   remoteConnection.createAnswer().then(
     gotDescription2,
