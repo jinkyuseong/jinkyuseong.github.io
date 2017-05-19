@@ -5,7 +5,7 @@ var bankBalance = 0;
 var playerBalanceElements = [];
 var lastPlayerEarned = [];
 var lastTimeOut;
-var LAST_TIMEOUT = 1000;
+var LAST_TIMEOUT = 10000;
 
 var moneyTypes = [100, 50, 10, 5, 1];
 
