@@ -77,10 +77,12 @@ function forDev() {
 }
 
 function createPlayer() {
+    if (playerCount > 4)
+        return;
     // means adding new col
     var innerPlayerTable = $('<table></table>').addClass('player').attr('id', 'player'+playerCount).append($('<tbody></tbody>'));
 
-    var innerPlayerName = $('<tr></tr>').append($('<td></td>').text('player '+playerCount));
+    var innerPlayerName = $('<tr></tr>').append($('<td></td>').text('player '+playerCount)).addClass('playerName');
 
     var innerPlayerScore = $('<tr></tr>').append($('<td></td>').attr('id', 'score'+playerCount));
     innerPlayerScore.attr('value', 0);
