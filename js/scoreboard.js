@@ -34,6 +34,9 @@ function createOptionMenu() {
         } else if (docElm.msRequestFullscreen) {
             docElm.msRequestFullscreen();
         }
+        // exit button is necessary? 
+        $('#toggleFullScreen').hide();
+        $('#addPlayer').hide();
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -54,15 +57,21 @@ function createOptionMenu() {
         bankBalance += 100;   
         updateScores();
     });
+
+    $('#addPlayer').click(function() {
+        createPlayer();
+    });
 }
 
 function forDev() {
+    /*
     var button = $('<button></button>')
         .text('AddPlayer')
         .click(function() { createPlayer(); });
     console.log(button);
     $('#bankFrame').append(button);
     console.log($('#bankFrame'));
+    */
     createPlayer();
     createPlayer();
 }
