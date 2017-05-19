@@ -84,9 +84,12 @@ button.btnStyle {
 }
 */
 
-button#toggleFullScreen {
- font-size: 3vh;
+div#options {
   position: absolute;
   top: 10px;
   left: 10px;
+}
+button.options {
+  display: block;
+ font-size: 3vh;
 }

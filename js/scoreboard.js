@@ -12,6 +12,11 @@ function onLoad() {
     console.log("onLoad");
     forDev();
 
+    createOptionMenu();
+    updateScores();
+}
+
+function createOptionMenu() {
     $('#toggleFullScreen').click(function() {
      var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
         (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
@@ -43,7 +48,12 @@ function onLoad() {
 
     });
 
-    updateScores();
+    $('#refillBank').click(function() {
+        if (bankBalance < 0)
+            bankBalance = 0;
+        bankBalance += 100;   
+        updateScores();
+    });
 }
 
 function forDev() {
@@ -67,7 +77,7 @@ function createPlayer() {
     innerPlayerScore.attr('value', 0);
     innerPlayerScore.addClass('scoreStyle');
 
-    var innerPlayerButtons = $('<td></td>').addClass('btn_'+playerCount).addClass('playerButtons');
+    var innerPlayerButtons = $('<td></td>').attr('id', 'btn_'+playerCount).addClass('playerButtons');
 
     moneyTypes.forEach( function(money) {
         var button = $('<button></button>')
@@ -77,7 +87,7 @@ function createPlayer() {
             .attr('value', money)
             .click(function(evt) {
                 console.log($(evt.target).parent());
-                playerEarned(parseInt($(evt.target).parent().attr('class').substr(4)), parseInt(evt.target.value));
+                playerEarned(parseInt($(evt.target).parent().attr('id').substr(4)), parseInt(evt.target.value));
             });
 
         innerPlayerButtons.append(button);
@@ -85,7 +95,7 @@ function createPlayer() {
 
     var check = $('<input></input>')
         .attr('type', 'checkbox')
-        .attr('id', 'expenseChk')
+        .attr('id', 'chk_'+playerCount)
         .click(function() {
             console.log(this.checked);
         });
@@ -104,11 +114,22 @@ function playerEarned(playerIndex, amount) {
     console.log('pleyerEarned', playerIndex, amount)
     var element = playerBalanceElements[playerIndex];
     var balance = parseInt(element.attr('value'));
-    element.attr('value', balance + amount);
 
-    bankBalance -= amount;
+    if ($('#chk_'+playerIndex).is(':checked'))
+    {
+        balance -= amount;
+        bankBalance += amount;
+    }
+    else
+    {
+        balance += amount;
+        bankBalance -= amount;
+    }
+    element.attr('value', balance);
+    /*
     if (bankBalance < 0 )
         bankBalance = 0;
+    */
     updateScores();
 }
 
