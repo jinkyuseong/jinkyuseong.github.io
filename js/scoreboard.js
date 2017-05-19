@@ -5,7 +5,7 @@ var bankBalance = 100;
 var playerBalanceElements = [];
 var lastPlayerEarned = [];
 var lastTimeOut;
-var LAST_TIMEOUT = 3000;
+var LAST_TIMEOUT = 5000;
 
 var moneyTypes = [50, 10, 5, 1];
 
@@ -73,14 +73,6 @@ function createOptionMenu() {
 }
 
 function forDev() {
-    /*
-    var button = $('<button></button>')
-        .text('AddPlayer')
-        .click(function() { createPlayer(); });
-    console.log(button);
-    $('#bankFrame').append(button);
-    console.log($('#bankFrame'));
-    */
     createPlayer();
     createPlayer();
 }
@@ -88,14 +80,12 @@ function forDev() {
 function createPlayer() {
     if (playerCount > 4)
         return;
-    // means adding new col
     var innerPlayerTable = $('<table></table>').addClass('player').attr('id', 'player'+playerCount).append($('<tbody></tbody>'));
 
     var innerPlayerName = $('<tr></tr>').append($('<td></td>').text('player '+playerCount)).addClass('playerName');
 
     var innerPlayerScore = $('<div></div>').attr('id', 'score'+playerCount);
     innerPlayerScore.attr('value', 0);
-//    innerPlayerScore.addClass('scoreStyle');
     innerPlayerScore.click(function() {
         console.log('clicked');
         applyEranings(true);
@@ -105,7 +95,6 @@ function createPlayer() {
     innerPlayerEarnings.attr('value', 0);
     innerPlayerEarnings.addClass('scoreStyleSmall');
     innerPlayerEarnings.click(function() {
-        console.log('clicked');
         applyEranings(true);
     })
 
@@ -113,7 +102,6 @@ function createPlayer() {
     innerPlayerCFO.attr('value', 0);
     innerPlayerCFO.addClass('scoreStyleSmall2');
     innerPlayerCFO.click(function() {
-        console.log('clicked');
         applyEranings(true);
     })
 
@@ -184,8 +172,11 @@ function playerEarned(playerIndex, amount) {
     console.log('pleyerEarned', playerIndex, amount)
     if ($('#chk_'+playerIndex).is(':checked'))
     {
-        lastPlayerEarned[playerIndex] -= amount;
-        bankBalance += amount;
+        if (lastPlayerEarned[playerIndex] >= amount)
+        {
+            lastPlayerEarned[playerIndex] -= amount;
+            bankBalance += amount;
+        }
     }
     else
     {
@@ -217,7 +208,7 @@ function updateScores() {
             if ($('#cfo_'+i).is(':checked'))
             {
                 $('#cfo'+i).show();
-                $('#cfo'+i).text('+' + Math.floor(lastPlayerEarned[i] * .5));
+                $('#cfo'+i).text(' +' + Math.floor(lastPlayerEarned[i] * .5));
                 tempLast += Math.floor(lastPlayerEarned[i] * .5);
             }
             else
@@ -242,6 +233,7 @@ function applyEranings(force) {
         }
         element.attr('value', balance);
         lastPlayerEarned[i] = 0;
+        $('#chk_'+i).prop('checked', false);
     }
     updateScores();
 }
