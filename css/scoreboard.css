@@ -50,10 +50,21 @@ td {
 }
 
 .scoreStyle {
-  font-size: 9vh; /* xx-large; */
+  font-size: 11vh; 
+  height: 24vh;
   font-weight: bold;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
+}
+
+.scoreStyleSmall {
+  font-size: 6vh; /* xx-large; */
+  font-weight: normal;
+}
+
+.scoreStyleSmall2 {
+  font-size: 5.5vh; /* xx-large; */
+  font-weight: normal;
 }
 
 .btnStyle {
