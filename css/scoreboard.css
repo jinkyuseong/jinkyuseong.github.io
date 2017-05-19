@@ -50,7 +50,7 @@ td {
 }
 
 .scoreStyle {
-  font-size: 11vh; /* xx-large; */
+  font-size: 9vh; /* xx-large; */
   font-weight: bold;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
@@ -78,7 +78,7 @@ td {
 }
 
 .playerName {
- font-size: 5vh;
+ font-size: 4vh;
 }
 
 div#options {

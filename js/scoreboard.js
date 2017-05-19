@@ -3,6 +3,9 @@
 var playerCount = 0;
 var bankBalance = 0;
 var playerBalanceElements = [];
+var lastPlayerEarned = [];
+var lastTimeOut;
+var LAST_TIMEOUT = 1000;
 
 var moneyTypes = [100, 50, 10, 5, 1];
 
@@ -84,7 +87,7 @@ function createPlayer() {
 
     var innerPlayerName = $('<tr></tr>').append($('<td></td>').text('player '+playerCount)).addClass('playerName');
 
-    var innerPlayerScore = $('<tr></tr>').append($('<td></td>').attr('id', 'score'+playerCount));
+    var innerPlayerScore = $('<tr></tr>').append($('<td></td>')).attr('id', 'score'+playerCount);
     innerPlayerScore.attr('value', 0);
     innerPlayerScore.addClass('scoreStyle');
 
@@ -117,36 +120,44 @@ function createPlayer() {
     $('#playerTable > tbody > tr').append($('<td></td>').append(innerPlayerTable));
 
     playerBalanceElements[playerCount] = innerPlayerScore;
+    lastPlayerEarned[playerCount] = 0;
     playerCount++;
     updateScores();
 }
 
 function playerEarned(playerIndex, amount) {
     console.log('pleyerEarned', playerIndex, amount)
-    var element = playerBalanceElements[playerIndex];
-    var balance = parseInt(element.attr('value'));
-
     if ($('#chk_'+playerIndex).is(':checked'))
     {
-        balance -= amount;
-        bankBalance += amount;
+        lastPlayerEarned[playerIndex] -= amount;
     }
     else
     {
-        balance += amount;
-        bankBalance -= amount;
+        lastPlayerEarned[playerIndex] += amount;
     }
-    element.attr('value', balance);
-    /*
-    if (bankBalance < 0 )
-        bankBalance = 0;
-    */
     updateScores();
+    clearTimeout(lastTimeOut);
+    lastTimeOut = setTimeout(applyEranings, LAST_TIMEOUT);
 }
 
 function updateScores() {
     playerBalanceElements.forEach(function(elm) {
-        elm.text(elm.attr('value'));
+        var id = parseInt(elm.attr('id').substr(5));
+        elm.text(elm.attr('value') + 
+            ((lastPlayerEarned[id] != 0) ? (' +' + lastPlayerEarned[id]) : ''));
     });
     $('#bankFrame > div').text(bankBalance);
 }
+
+function applyEranings() {
+    for (var i = 0; i < lastPlayerEarned.length; ++i) 
+    {
+        var element = playerBalanceElements[i];
+        var balance = parseInt(element.attr('value'));
+        element.attr('value', balance + lastPlayerEarned[i]);
+        bankBalance -= lastPlayerEarned[i];
+        lastPlayerEarned[i] = 0;
+    }
+    updateScores();
+}
+
