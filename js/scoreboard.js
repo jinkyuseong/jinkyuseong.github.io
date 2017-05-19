@@ -111,7 +111,7 @@ function createPlayer() {
             console.log(this.checked);
         });
 
-    innerPlayerButtons.append($('<div></div>').addClass('chkStyle').append($('<label>expense</label>').append(check)));
+    innerPlayerButtons.append($('<div></div>', '{overflow: hidden;}').addClass('chkStyle').append($('<label>expense</label>').append(check)));
 
     innerPlayerTable.append(innerPlayerName).append(innerPlayerScore).append($('<tr></tr>').append(innerPlayerButtons));
     $('#playerTable > tbody > tr').append($('<td></td>').append(innerPlayerTable));
