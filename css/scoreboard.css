@@ -57,7 +57,7 @@ td {
 }
 
 .btnStyle {
- font-size: 7vh;
+ font-size: 8vh;
  width: 49%;
   padding: 5vh 5vh 5vh 5vh ;
   margin: 0 0 0 0;
@@ -65,7 +65,7 @@ td {
 
 .chkStyle {
   display: inline-block;
- font-size: 7vh;
+ font-size: 8vh;
  width: 49%;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
@@ -83,3 +83,10 @@ button.btnStyle {
   margin: 5% 5% 0% 5% ;
 }
 */
+
+button#toggleFullScreen {
+ font-size: 3vh;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
