@@ -4,10 +4,11 @@ var playerCount = 0;
 var bankBalance = 100;
 var playerBalanceElements = [];
 var lastPlayerEarned = [];
+var lastPlayerSalary = [];
 var lastTimeOut;
 var LAST_TIMEOUT = 5000;
 
-var moneyTypes = [10, 5, 1, -5];
+var moneyTypes = [10, 5, 1];
 
 $('document').ready(onLoad);
 
@@ -84,6 +85,7 @@ function createPlayer() {
 
     var innerPlayerName = $('<tr></tr>').append($('<td></td>').text('player '+playerCount)).addClass('playerName');
 
+    // player score fields
     var innerPlayerScore = $('<div></div>').attr('id', 'score'+playerCount);
     innerPlayerScore.attr('value', 0);
     innerPlayerScore.click(function() {
@@ -91,6 +93,7 @@ function createPlayer() {
         applyEranings(true);
     })
 
+    // player main earnings
     var innerPlayerEarnings = $('<span></span>').attr('id', 'earnings'+playerCount);
     innerPlayerEarnings.attr('value', 0);
     innerPlayerEarnings.addClass('scoreStyleSmall');
@@ -98,6 +101,7 @@ function createPlayer() {
         applyEranings(true);
     })
 
+    // player additional earnings by CFO
     var innerPlayerCFO= $('<span></span>').attr('id', 'cfo'+playerCount);
     innerPlayerCFO.attr('value', 0);
     innerPlayerCFO.addClass('scoreStyleSmall2');
@@ -105,8 +109,17 @@ function createPlayer() {
         applyEranings(true);
     })
 
+    // salary expense
+    var innerPlayerSalary = $('<span></span>').attr('id', 'slr'+playerCount);
+    innerPlayerSalary.attr('value', 0);
+    innerPlayerSalary.addClass('scoreStyleSmall2');
+    innerPlayerSalary.click(function() {
+        applyEranings(true);
+    })
+
     var innerPlayerButtons = $('<td></td>').attr('id', 'btn_'+playerCount).addClass('playerButtons');
 
+    // money buttons
     moneyTypes.forEach( function(money) {
         var button = $('<button></button>')
             .addClass('moneyBtn')
@@ -121,6 +134,20 @@ function createPlayer() {
         innerPlayerButtons.append(button);
     });
 
+    // salary button
+    var salaryButton = $('<button></button>')
+        .addClass('moneyBtn')
+        .addClass('btnStyle')
+        .text('S')
+        .attr('value', -5)
+        .click(function(evt) {
+            console.log($(evt.target).parent());
+            salaryExpensed(parseInt($(evt.target).parent().attr('id').substr(4)), parseInt(evt.target.value));
+        });
+
+    innerPlayerButtons.append(salaryButton);
+
+    // expense check box
     var checkExpense = $('<input></input>')
         .attr('type', 'checkbox')
         .attr('id', 'chk_'+playerCount)
@@ -133,6 +160,7 @@ function createPlayer() {
 
     innerPlayerButtons.append($('<div></div>', '{overflow: hidden;}').addClass('chkStyle').append($('<label>expense</label>').append(checkExpense)));
 
+    // CFO check box
     var checkCFO = $('<input></input>')
         .attr('type', 'checkbox')
         .attr('id', 'cfo_'+playerCount)
@@ -156,6 +184,7 @@ function createPlayer() {
                                     .append($('<div></div>')
                                         .append(innerPlayerEarnings)
                                         .append(innerPlayerCFO)
+                                        .append(innerPlayerSalary)
                                 ))));
 
     innerPlayerTable.append($('<tr></tr>').append(innerPlayerButtons));
@@ -163,9 +192,19 @@ function createPlayer() {
     $('#playerTable > tbody > tr').append($('<td></td>').append(innerPlayerTable));
 
     playerBalanceElements[playerCount] = innerPlayerScore;
-    lastPlayerEarned[playerCount] = 0;
+    lastPlayerEarned[playerCount] = lastPlayerSalary[playerCount] = 0;
     playerCount++;
     updateScores();
+}
+
+function salaryExpensed(playerIndex, amount) {
+    if ($('#chk_'+playerIndex).is(':checked'))
+        lastPlayerSalary[playerIndex] -= amount;
+    else
+        lastPlayerSalary[playerIndex] += amount;
+    updateScores();
+    clearTimeout(lastTimeOut);
+    lastTimeOut = setTimeout(function() { applyEranings(false); }, LAST_TIMEOUT);
 }
 
 function playerEarned(playerIndex, amount) {
@@ -211,6 +250,16 @@ function updateScores() {
             else
                 $('#cfo'+i).hide();
         }
+        if (lastPlayerSalary[i] == 0)
+        {
+            $('#slr'+i).hide();
+        }
+        else
+        {
+            $('#slr'+i).show();
+            $('#slr'+i) .text(' ' + lastPlayerSalary[i]);
+            tempLast += lastPlayerSalary[i];
+        }
     }
     $('#bankFrame > div').text(bankBalance - tempLast);
 }
@@ -228,8 +277,9 @@ function applyEranings(force) {
             balance += Math.floor(lastPlayerEarned[i] * .5);
             bankBalance -= Math.floor(lastPlayerEarned[i] * .5);
         }
+        balance += lastPlayerSalary[i];
         element.attr('value', balance);
-        lastPlayerEarned[i] = 0;
+        lastPlayerSalary[i] = lastPlayerEarned[i] = 0;
         $('#chk_'+i).prop('checked', false);
     }
     updateScores();
