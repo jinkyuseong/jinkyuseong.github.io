@@ -50,7 +50,7 @@ td {
 }
 
 .scoreStyle {
-  font-size: 13vh; 
+  font-size: 12vh; 
   height: 26vh;
   font-weight: bold;
   margin: 0 0 0 0;
@@ -58,12 +58,12 @@ td {
 }
 
 .scoreStyleSmall {
-  font-size: 6.5vh; /* xx-large; */
+  font-size: 7vh; /* xx-large; */
   font-weight: normal;
 }
 
 .scoreStyleSmall2 {
-  font-size: 4.5vh; /* xx-large; */
+  font-size: 5vh; /* xx-large; */
   font-weight: normal;
 }
 
