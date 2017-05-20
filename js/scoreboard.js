@@ -7,7 +7,7 @@ var lastPlayerEarned = [];
 var lastTimeOut;
 var LAST_TIMEOUT = 5000;
 
-var moneyTypes = [50, 10, 5, 1];
+var moneyTypes = [10, 5, 1, -5];
 
 $('document').ready(onLoad);
 
