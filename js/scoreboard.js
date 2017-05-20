@@ -273,6 +273,7 @@ function applyEranings(force) {
             bankBalance -= Math.floor(lastPlayerEarned[i] * .5);
         }
         balance += lastPlayerSalary[i];
+        bankBalance -= lastPlayerSalary[i];
         element.attr('value', balance);
         lastPlayerSalary[i] = lastPlayerEarned[i] = 0;
         $('#chk_'+i).prop('checked', false);
