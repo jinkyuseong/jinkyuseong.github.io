@@ -172,11 +172,8 @@ function playerEarned(playerIndex, amount) {
     console.log('pleyerEarned', playerIndex, amount)
     if ($('#chk_'+playerIndex).is(':checked'))
     {
-        if (lastPlayerEarned[playerIndex] >= amount)
-        {
-            lastPlayerEarned[playerIndex] -= amount;
-            bankBalance += amount;
-        }
+        lastPlayerEarned[playerIndex] -= amount;
+        bankBalance += amount;
     }
     else
     {
