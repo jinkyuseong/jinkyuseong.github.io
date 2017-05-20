@@ -50,15 +50,15 @@ td {
 }
 
 .scoreStyle {
-  font-size: 11vh; 
-  height: 24vh;
+  font-size: 13vh; 
+  height: 26vh;
   font-weight: bold;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
 }
 
 .scoreStyleSmall {
-  font-size: 6vh; /* xx-large; */
+  font-size: 6.5vh; /* xx-large; */
   font-weight: normal;
 }
 
