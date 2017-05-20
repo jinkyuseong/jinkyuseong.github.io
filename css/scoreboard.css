@@ -68,12 +68,22 @@ td {
 }
 
 .btnStyle {
+  background-color: #eeeeee;
+  display: inline-block;
+  text-align: center;
+  line-height: 20vh;
  font-size: 5vh;
- width: 49%;
+ width: 47%;
  height: 20vh;
   padding: 0 0 0 0;
-  margin: 0 0 0 0;
+  margin: 1 1 1 1;
 }
+
+.btnSalaryStyle {
+  background-color: #dddddd;
+}
+
+.btnStyle:active {background-color: #999999; }
 
 .chkStyle {
   display: inline-block;

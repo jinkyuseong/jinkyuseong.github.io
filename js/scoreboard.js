@@ -121,30 +121,25 @@ function createPlayer() {
 
     // money buttons
     moneyTypes.forEach( function(money) {
-        var button = $('<button></button>')
-            .addClass('moneyBtn')
+        var button = $('<div></div>')
             .addClass('btnStyle')
             .text(money)
             .attr('value', money)
             .click(function(evt) {
-                console.log($(evt.target).parent());
-                playerEarned(parseInt($(evt.target).parent().attr('id').substr(4)), parseInt(evt.target.value));
+                playerEarned(parseInt($(evt.target).parent().attr('id').substr(4)), parseInt($(evt.target).attr('value')));
             });
-
         innerPlayerButtons.append(button);
     });
 
     // salary button
-    var salaryButton = $('<button></button>')
-        .addClass('moneyBtn')
+    var salaryButton = $('<div></div>')
         .addClass('btnStyle')
+        .addClass('btnSalaryStyle')
         .text('S')
         .attr('value', -5)
         .click(function(evt) {
-            console.log($(evt.target).parent());
-            salaryExpensed(parseInt($(evt.target).parent().attr('id').substr(4)), parseInt(evt.target.value));
+            salaryExpensed(parseInt($(evt.target).parent().attr('id').substr(4)), parseInt($(evt.target).attr('value')));
         });
-
     innerPlayerButtons.append(salaryButton);
 
     // expense check box
