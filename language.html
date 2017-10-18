@@ -1,0 +1,17 @@
+<html>
+
+    <body>
+        <div id="result1">before</div>
+        <script type ="text/javascript">
+            const changed = (text) => {
+                let result = document.getElementById('result1');
+                result.innerText += '\n' + text;
+            };
+            window.onload = changed(navigator.languages);
+            window.onlanguagechange = function(ev) {
+                changed(navigator.languages);
+            }
+        </script>
+    </body>
+
+</html>
