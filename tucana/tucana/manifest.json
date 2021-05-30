@@ -1,0 +1,12 @@
+{
+    "title":"tucana",
+    "countX":2,
+    "countY":1,
+    "sortType":"random",
+    "imageExt": "png",
+    "cardsType": "specific",
+    "cards": [
+        { "1": 2 }, { "2" : 4 }, {"3": 6}, { "4": 7 }, { "5": 8 }
+    ],
+    "shift": 2
+}
