@@ -1,0 +1,8 @@
+body {
+  background-color: white;
+}
+
+div.solidBox {
+  border-style: solid;
+  border-width: thin;
+}
