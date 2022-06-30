@@ -36,6 +36,9 @@ function notifyMe() {
   else {
     console.log('denied');
   }
+  setTimeout( () => {
+    notifyMe();
+  }, 5000);
 
   // At last, if the user has denied notifications, and you
   // want to be respectful there is no need to bother them anymore.
