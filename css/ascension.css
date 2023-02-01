@@ -1,0 +1,33 @@
+#main {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.level1 {
+    height: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainscore {
+    font-weight: 800;
+    font-size: 1200%;
+}
+
+.touch {
+    width: 33%;
+    height: 100%;
+    background: transparent;
+    float: left;
+}
+
+.rune {
+    color: black;
+}
+
+.power {
+    color: red;
+}

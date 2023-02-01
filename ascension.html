@@ -1,0 +1,51 @@
+<html>
+<link rel="stylesheet" href="css/ascension.css" />
+<script>
+    window.onload = () => {
+        var rune = 0;
+        var power = 0;
+
+        var scores = {
+            runes: 0,
+            powers: 0
+        }
+
+        let onClick = (evt) => {
+            let inc = evt.target.classList[1] == 'dec' ? -1 : (evt.target.classList[1] == 'inc' ? 1 : (0 - scores[evt.target.classList[0]]));
+            scores[evt.target.classList[0]] += inc;
+            console.log(scores);
+            document.getElementById('runescore').textContent = scores['runes'];
+            document.getElementById('powerscore').innerText = scores['powers'];
+        }
+
+        let runes = document.getElementsByClassName('runes');
+        for (let item of runes) {
+            item.addEventListener('touchstart', onClick);
+        }
+
+        let powers = document.getElementsByClassName('powers');
+        for (let item of powers) {
+            item.addEventListener('touchstart', onClick);
+        }
+    }
+</script>
+
+<body id="main">
+        <div class="level1 rune mainscore">
+            <div style="position:absolute; background: transparent; top: 0; left: 0; width: 100%; height: 50%">
+                <div class="runes dec touch"></div>
+                <div class="runes clr touch"></div>
+                <div class="runes inc touch"></div>
+            </div>
+            <span id="runescore">0</span>
+        </div>
+        <div class="level1 power mainscore">
+            <div style="position:absolute; background: transparent; top: 50%; left: 0; width: 100%; height: 50%">
+                <div class="powers dec touch"></div>
+                <div class="powers clr touch"></div>
+                <div class="powers inc touch"></div>
+            </div>
+            <span id="powerscore">0</span>
+        </div>
+</body>
+</html>
