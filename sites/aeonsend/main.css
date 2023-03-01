@@ -1,0 +1,23 @@
+body {
+    font-size: larger
+
+}
+
+button {
+    font-size: xx-large;
+}
+
+.g {
+  color: #550055;
+  background-color: #e0c0e0;
+}
+
+.a {
+  color: #000055;
+  background-color: #a4a4f0;
+}
+
+.s {
+  color: #550000;
+  background-color: #FFDD44
+}
