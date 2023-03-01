@@ -4,7 +4,8 @@ body {
 }
 
 button {
-    font-size: 6vh;
+  font-size: 6vh;
+  touch-action: manipulation;
 }
 
 .g {
