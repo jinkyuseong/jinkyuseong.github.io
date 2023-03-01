@@ -171,6 +171,20 @@ function printResult() {
 
 window.onload = () => {
   let radios = document.getElementById('radios');
+
+  let radio = document.createElement("input");
+  radio.setAttribute("type", "radio");
+  radio.setAttribute("name", "random_number");
+  radio.setAttribute("id", `random`);
+  radio.addEventListener('change', function() { randomR = getRandomInt(6) + 1; });
+  radio.setAttribute("checked", true);
+  radios.appendChild(radio);
+  let label = document.createElement("label");
+  label.setAttribute("for", `random`);
+  label.innerText = `random`;
+  radios.appendChild(label);
+  radios.appendChild(document.createElement("br"));
+
   for (let id = 1; id < 7; id++) {
     let radio = document.createElement("input");
     radio.setAttribute("type", "radio");

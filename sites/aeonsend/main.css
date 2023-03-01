@@ -1,22 +1,25 @@
 body {
-    font-size: 7vh;
+    font-size: 4vh;
 }
 
 button {
-    font-size: 11vh;
+    font-size: 7vh;
 }
 
 .g {
+  font-size: 3vh;
   color: #550055;
   background-color: #e0c0e0;
 }
 
 .a {
+  font-size: 3vh;
   color: #000055;
   background-color: #a4a4f0;
 }
 
 .s {
+  font-size: 3vh;
   color: #550000;
   background-color: #FFDD44
 }
