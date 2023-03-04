@@ -47,6 +47,11 @@ const RANDOMS = {
       [6, 7, 8],
       [6, 7, 8],
     ],
+    titles: {
+      g: ['<4', '4', '?'],
+      a: ['?', '?'],
+      s: ['<5', '<5', '>5', '>5'],
+    },
   },
   2: {
     g: [
@@ -61,6 +66,11 @@ const RANDOMS = {
       [1, 2, 3, 4, 5],
       [7, 8],
     ],
+    titles: {
+      g: ['>3', '>3', '>3'],
+      a: ['>4', '?'],
+      s: ['<6', '<6', '<6', '>6'],
+    },
   },
   3: {
     g: [
@@ -70,16 +80,31 @@ const RANDOMS = {
     ],
     a: [[]],
     s: [[3], [4], [1, 2, 3, 4], [6, 7, 8], [6, 7, 8]],
+    titles: {
+      g: ['<4', '4/5', '4/5'],
+      a: ['?'],
+      s: ['3', '4', '<5', '>5', '>5'],
+    },
   },
   4: {
     g: [[5, 6, 7, 8], [], []],
     a: [[1, 2, 3], [5, 6, 7, 8], []],
     s: [[1, 2, 3, 4], [6, 7, 8], []],
+    titles: {
+      g: ['>4', '?', '?'],
+      a: ['<4', '>4', '?'],
+      s: ['<5', '>5', '?']
+    },
   },
   5: {
     g: [[2], [3], [4], [5]],
     a: [[]],
     s: [[4], [5], [6], [7, 8]],
+    titles: {
+      g: ['2','3','4','5'],
+      a: ['?'],
+      s: ['4','5','6','7/8']
+    },
   },
   6: {
     g: [[3], [4]],
@@ -90,6 +115,11 @@ const RANDOMS = {
       [5, 6],
       [7, 8],
     ],
+    titles: {
+      g: ['3','4'],
+      a: ['<4','>4','?'],
+      s: ['3/4','5/6','5/6','7/8']
+    },
   },
 };
 
@@ -107,25 +137,27 @@ function run() {
   let copies = JSON.parse(JSON.stringify(CARDS));
   let result = '';
   for (let kind in random) {
+    if (kind === 'titles')
+      continue;
     for (let cardsIndex in random[kind]) {
       // [3], [4]
       let price = 0;
       let errorcount = 0;
-      while(price == 0) {
+      while (price == 0) {
         if (random[kind][cardsIndex].length == 1) {
-            price = random[kind][cardsIndex][0];
+          price = random[kind][cardsIndex][0];
         } else {
           let max = random[kind][cardsIndex].length;
           if (max == 0) {
             max = 8;
-            random[kind][cardsIndex] = [1,2,3,4,5,6,7,8];
+            random[kind][cardsIndex] = [1, 2, 3, 4, 5, 6, 7, 8];
           }
           price = random[kind][cardsIndex][getRandomInt(max)];
         }
         //console.log( `${cardsIndex}: `, random[kind][cardsIndex], price, copies[kind][price]);
         if (!copies[kind][price]) {
           //console.log('before:', random[kind][cardsIndex]);
-          random[kind][cardsIndex].splice(random[kind][cardsIndex].indexOf(price), 1)
+          random[kind][cardsIndex].splice(random[kind][cardsIndex].indexOf(price), 1);
           //console.log('after:', random[kind][cardsIndex]);
           price = 0;
           // errorcount += 1;
@@ -138,14 +170,14 @@ function run() {
           }
         }
         if (!copies[kind][price] || copies[kind][price].length == 0) {
-            price = 0;
+          price = 0;
         } else {
-            // console.log( kind, price, 'before', copies[kind][price]);
-            result = copies[kind][price].splice(getRandomInt(copies[kind][price].length), 1)[0];
-            //console.log( result, copies[kind][price]);
+          // console.log( kind, price, 'before', copies[kind][price]);
+          result = copies[kind][price].splice(getRandomInt(copies[kind][price].length), 1)[0];
+          //console.log( result, copies[kind][price]);
         }
       }
-      chosen.push( { kind, price, result });
+      chosen.push({ kind, price, result });
       result = '';
     }
   }
@@ -160,7 +192,7 @@ function printResult() {
   for (let item of chosen) {
     let span = document.createElement('span');
     span.innerText = `[${item.price}] ${item.result}`;
-    span.setAttribute('class', item.kind)
+    span.setAttribute('class', `${item.kind} result`);
     result.appendChild(span);
     result.appendChild(document.createElement('br'));
   }
@@ -172,33 +204,50 @@ function printResult() {
 window.onload = () => {
   let radios = document.getElementById('radios');
 
-  let radio = document.createElement("input");
-  radio.setAttribute("type", "radio");
-  radio.setAttribute("name", "random_number");
-  radio.setAttribute("id", `random`);
-  radio.addEventListener('change', function() { randomR = getRandomInt(6) + 1; });
-  radio.setAttribute("checked", true);
+  let radio = document.createElement('input');
+  radio.setAttribute('type', 'radio');
+  radio.setAttribute('name', 'random_number');
+  radio.setAttribute('id', `random`);
+  radio.addEventListener('change', function () {
+    randomR = getRandomInt(6) + 1;
+  });
+  radio.setAttribute('checked', true);
   radios.appendChild(radio);
-  let label = document.createElement("label");
-  label.setAttribute("for", `random`);
+  let label = document.createElement('label');
+  label.setAttribute('for', `random`);
   label.innerText = `random`;
   radios.appendChild(label);
-  radios.appendChild(document.createElement("br"));
+  radios.appendChild(document.createElement('br'));
 
   for (let id = 1; id < 7; id++) {
-    let radio = document.createElement("input");
-    radio.setAttribute("type", "radio");
-    radio.setAttribute("name", "random_number");
-    radio.setAttribute("id", `radio${id}`);
-    radio.setAttribute("value", id);
-    radio.addEventListener('change', function() { randomR = this.value; });
+    let radio = document.createElement('input');
+    radio.setAttribute('type', 'radio');
+    radio.setAttribute('name', 'random_number');
+    radio.setAttribute('id', `radio${id}`);
+    radio.setAttribute('value', id);
+    radio.addEventListener('change', function () {
+      randomR = this.value;
+    });
     radios.appendChild(radio);
 
-    let label = document.createElement("label");
-    label.setAttribute("for", `radio${id}`);
-    label.innerText = `random-${id}`;
-    radios.appendChild(label);
+    // let label = document.createElement('label');
+    // label.setAttribute('for', `radio${id}`);
+    // label.innerText = ` [ ${id} ] `;
+    // radios.appendChild(label);
 
-    radios.appendChild(document.createElement("br"));
+    for (let kind in RANDOMS[id]) {
+      if (!!RANDOMS[id]['titles'][kind]) {
+        console.log('->', RANDOMS[id]['titles'][kind]);
+        //let text = document.createElement('span');
+        let text = document.createElement('label');
+        text.setAttribute('for', `radio${id}`);
+        let value = ' ' + RANDOMS[id]['titles'][kind].join(' ') + ' ';
+        text.innerText = value;
+        text.setAttribute('class', `title ${kind}`);
+        radios.appendChild(text);
+      }
+    }
+
+    radios.appendChild(document.createElement('br'));
   }
-}
+};

@@ -4,24 +4,30 @@ body {
 }
 
 button {
+  width: 100%;
   font-size: 6vh;
   touch-action: manipulation;
 }
 
-.g {
+.title {
+  font-size: 3vh
+}
+
+.result {
   font-size: 3vh;
+}
+
+.g {
   color: #550055;
   background-color: #e0c0e0;
 }
 
 .a {
-  font-size: 3vh;
   color: #000055;
   background-color: #a4a4f0;
 }
 
 .s {
-  font-size: 3vh;
   color: #550000;
   background-color: #FFDD44
 }
