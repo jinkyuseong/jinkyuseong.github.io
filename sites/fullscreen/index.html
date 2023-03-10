@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <script>
+            window.onload = () => { }
+            function divFull() {
+                let el = document.getElementById('video_div');
+                el.requestFullscreen();
+            }
+            function videoFull() {
+                let el = document.getElementById('video');
+                el.requestFullscreen();
+            }
+        </script>
+        <div id="video_div" style="background-color: aquamarine">
+            <div>Inner div</div>
+            <video id="video" controls>
+                <source src="http://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
+            </video>
+        </div>
+        <p></p>
+        <button id="div_full" onclick="divFull()">==== Full div ==== </button><p></p>
+        <button id="video_full" onclick="videoFull()">==== Full Video only ====</button>
+    </body>
+</html>
