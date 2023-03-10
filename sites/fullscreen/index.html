@@ -4,14 +4,43 @@
     </head>
     <body>
         <script>
+            var console_original = window.console;
+            window.console = {
+                log: (...args) => {
+                    let box = document.getElementById('resultBox');
+                    box.innerText = args + '\n' + box.innerText;
+                    console_original.log(args);
+                },
+                warn: (...args) => {
+                    let box = document.getElementById('resultBox');
+                    box.innerText = args + '\n' + box.innerText;
+                    console_original.log(args);
+                },
+                error: (...args) => {
+                    let box = document.getElementById('resultBox');
+                    box.innerText = args + '\n' + box.innerText;
+                    console_original.log(args);
+                },
+            }
+
             window.onload = () => { }
             function divFull() {
-                let el = document.getElementById('video_div');
-                el.requestFullscreen();
+                console.log('div full clicked');
+                try {
+                    let el = document.getElementById('video_div');
+                    el.requestFullscreen();
+                } catch (e) {
+                    console.log(e);
+                }
             }
             function videoFull() {
-                let el = document.getElementById('video');
-                el.requestFullscreen();
+                console.log('video full clicked');
+                try {
+                    let el = document.getElementById('video');
+                    el.requestFullscreen();
+                } catch (e) {
+                    console.log(e);
+                }
             }
         </script>
         <div id="video_div" style="background-color: aquamarine">
@@ -23,5 +52,6 @@
         <p></p>
         <button id="div_full" onclick="divFull()">==== Full div ==== </button><p></p>
         <button id="video_full" onclick="videoFull()">==== Full Video only ====</button>
+        <div id="resultBox"></div>
     </body>
 </html>
