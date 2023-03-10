@@ -24,6 +24,24 @@
             }
 
             window.onload = () => { }
+            function divFullw() {
+                console.log('div fullw clicked');
+                try {
+                    let el = document.getElementById('video_div');
+                    el.webkitEnterFullscreen();
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            function videoFullw() {
+                console.log('video fullw clicked');
+                try {
+                    let el = document.getElementById('video');
+                    el.webkitEnterFullscreen();
+                } catch (e) {
+                    console.log(e);
+                }
+            }
             function divFull() {
                 console.log('div full clicked');
                 try {
@@ -51,7 +69,10 @@
         </div>
         <p></p>
         <button id="div_full" onclick="divFull()">==== Full div ==== </button><p></p>
-        <button id="video_full" onclick="videoFull()">==== Full Video only ====</button>
+        <button id="video_full" onclick="videoFull()">==== Full Video only ====</button><p></p>
+
+        <button id="div_fullw" onclick="divFullw()">==== [webkit] Full div ==== </button><p></p>
+        <button id="video_fullw" onclick="videoFullw()">==== [webkit] Full Video only ====</button>
         <div id="resultBox"></div>
     </body>
 </html>
