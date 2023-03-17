@@ -326,4 +326,8 @@ window.onload = () => {
 
     random_numbers.appendChild(document.createElement('br'));
   }
+
+  setTimeout( () => {
+    document.getElementById('random').click();
+  }, 100);
 };
