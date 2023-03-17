@@ -17,17 +17,17 @@ button {
   font-size: 3vh;
 }
 
-.g {
+.gems {
   color: #550055;
   background-color: #e0c0e0;
 }
 
-.a {
+.relics {
   color: #000055;
   background-color: #a4bcf0;
 }
 
-.s {
+.spells {
   color: #550000;
   background-color: #FFDD44
 }
