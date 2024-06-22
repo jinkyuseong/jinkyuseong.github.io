@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkshuffler=self.webpackChunkshuffler||[]).push([[861],{861:(e,s,f)=>{e.exports=f.p+"static/media/7.cd4b19879b4d41597421.jpg"}}]);
